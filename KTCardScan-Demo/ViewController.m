@@ -7,23 +7,26 @@
 //
 
 #import "ViewController.h"
+#import "KTCardScanViewController.h"
 
 @interface ViewController ()
 
+@property (strong, nonatomic) IBOutlet UILabel *cardIdLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+- (IBAction)scan:(id)sender {
+    self.cardIdLabel.text = @"Id Number";
+    self.imageView.image = nil;
+    
+    KTCardScanViewController *vc = [[KTCardScanViewController alloc] init];
+    vc.completion = ^(NSString *cardId, UIImage *cardImage) {
+        self.cardIdLabel.text = cardId;
+        self.imageView.image = cardImage;
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 @end
